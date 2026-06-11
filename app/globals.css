@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f7f8fa;
+  --foreground: #111827;
+  --font-inter: Inter, Arial, sans-serif;
+  --font-montserrat: Montserrat, Inter, Arial, sans-serif;
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+  color: var(--foreground);
+  background: #ffffff;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  color: #ffffff;
+  background: #d86a27;
+}
+
+.container-enterprise {
+  width: min(1180px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.glass-panel {
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 20px 60px rgba(14, 40, 82, 0.1);
+  backdrop-filter: blur(18px);
+}
+
+.button-ripple {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.button-ripple::after {
+  content: "";
+  position: absolute;
+  inset: auto auto 0 50%;
+  width: 0;
+  height: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  transform: translate(-50%, 50%);
+  transition: width 0.45s ease, height 0.45s ease;
+  z-index: -1;
+}
+
+.button-ripple:hover::after {
+  width: 260px;
+  height: 260px;
+}
+
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus-ring:focus-visible {
+  outline-color: #d86a27;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
