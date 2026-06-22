@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
+import { ChunkLoadRecovery } from "@/components/ChunkLoadRecovery";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
@@ -86,6 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-IN" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="font-sans antialiased">
+        <ChunkLoadRecovery />
         <JsonLd data={[localBusinessSchema, organizationSchema, websiteSchema]} />
         <Navbar />
         <main>{children}</main>

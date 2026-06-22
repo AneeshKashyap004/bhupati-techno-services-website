@@ -1,9 +1,7 @@
 {
-  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
   "/about/page": "app/about/page.js",
   "/page": "app/page.js",
-  "/services/page": "app/services/page.js",
+  "/contact/page": "app/contact/page.js",
   "/industries/page": "app/industries/page.js",
-  "/blog/page": "app/blog/page.js",
-  "/contact/page": "app/contact/page.js"
+  "/services/page": "app/services/page.js"
 }
