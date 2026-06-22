@@ -41,10 +41,25 @@ const config: Config = {
           "0%, 100%": { opacity: "0.35", transform: "scaleX(0.86)" },
           "50%": { opacity: "1", transform: "scaleX(1)" },
         },
+        floatOrb: {
+          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
+          "50%": { transform: "translate(18px, -24px) scale(1.06)" },
+        },
+        pulseDot: {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.55", transform: "scale(0.85)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "200% center" },
+          "100%": { backgroundPosition: "-200% center" },
+        },
       },
       animation: {
         marquee: "marquee 24s linear infinite",
         pulseLine: "pulseLine 2.6s ease-in-out infinite",
+        floatOrb: "floatOrb 14s ease-in-out infinite",
+        pulseDot: "pulseDot 2s ease-in-out infinite",
+        shimmer: "shimmer 8s linear infinite",
       },
     },
   },

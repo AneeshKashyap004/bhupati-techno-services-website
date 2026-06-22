@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Send } from "lucide-react";
+import { site } from "@/data/site";
 
 type FormValues = {
   name: string;
@@ -12,16 +14,35 @@ type FormValues = {
 };
 
 export function ContactForm() {
+  const [submitted, setSubmitted] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm<FormValues>();
+
+  const onSubmit = (data: FormValues) => {
+    const subject = encodeURIComponent(`Website inquiry from ${data.name}`);
+    const body = encodeURIComponent(
+      [
+        `Name: ${data.name}`,
+        `Email: ${data.email}`,
+        `Phone: ${data.phone || "Not provided"}`,
+        `Service interest: ${data.service}`,
+        "",
+        "Message:",
+        data.message,
+      ].join("\n"),
+    );
+
+    window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
+    setSubmitted(true);
+  };
 
   return (
     <form
       className="rounded-lg border border-slate-200 bg-white p-6 shadow-soft"
-      onSubmit={handleSubmit(() => undefined)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div className="grid gap-4 md:grid-cols-2">
         <label className="grid gap-2 text-sm font-semibold text-brand-dark">
@@ -67,12 +88,15 @@ export function ContactForm() {
           aria-invalid={Boolean(errors.message)}
         />
       </label>
-      {isSubmitSuccessful ? (
+      {submitted ? (
         <p className="mt-4 rounded-md bg-green-50 px-4 py-3 text-sm font-semibold text-green-700">
-          Thank you. The form is ready for CRM or email integration.
+          Your email app should open with the inquiry addressed to {site.email}. Send it from there to complete your request.
         </p>
       ) : null}
-      <button className="button-ripple mt-6 inline-flex items-center gap-2 rounded-md bg-brand-orange px-6 py-3 font-bold text-white shadow-soft">
+      <button
+        type="submit"
+        className="button-ripple mt-6 inline-flex items-center gap-2 rounded-md bg-brand-orange px-6 py-3 font-bold text-white shadow-soft"
+      >
         Send Inquiry <Send size={18} aria-hidden />
       </button>
     </form>

@@ -4,23 +4,25 @@ import { motion } from "framer-motion";
 import { Activity, ArrowRight, CheckCircle2, Database, MonitorDot, Server, ShieldCheck, Users } from "lucide-react";
 import Link from "next/link";
 import { architectureFlow, partners, socMetrics, stats } from "@/data/site";
-import { Counter, Reveal } from "@/components/Motion";
+import { Counter, Reveal, Stagger, StaggerItem } from "@/components/Motion";
 import { SectionHeader } from "@/components/SectionHeader";
 
 const flowIcons = [Users, Server, ShieldCheck, Database, ArrowRight, MonitorDot, Activity];
 
 export function StatsCounter() {
   return (
-    <section className="bg-white py-12">
-      <div className="container-enterprise grid gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-soft md:grid-cols-4">
-        {stats.map((stat, index) => (
-          <Reveal key={stat.label} delay={index * 0.05} className="rounded-md bg-brand-light p-6">
-            <p className="font-heading text-3xl font-extrabold text-brand-navy">
-              <Counter value={stat.value} suffix={stat.suffix} decimals={stat.value % 1 ? 1 : 0} />
-            </p>
-            <p className="mt-2 text-sm font-semibold text-brand-gray">{stat.label}</p>
-          </Reveal>
-        ))}
+    <section className="-mt-8 bg-white py-12">
+      <div className="container-enterprise">
+        <Stagger className="grid items-stretch gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-soft md:grid-cols-4" stagger={0.07}>
+          {stats.map((stat) => (
+            <StaggerItem key={stat.label} className="rounded-lg bg-brand-light p-6">
+              <p className="font-heading text-3xl font-extrabold text-brand-navy">
+                <Counter value={stat.value} suffix={stat.suffix} decimals={stat.value % 1 ? 1 : 0} />
+              </p>
+              <p className="mt-2 text-sm font-semibold text-brand-gray">{stat.label}</p>
+            </StaggerItem>
+          ))}
+        </Stagger>
       </div>
     </section>
   );
@@ -43,7 +45,7 @@ export function TechnologyPartners() {
           {loop.map((partner, index) => (
             <div
               key={`${partner}-${index}`}
-              className="grid h-20 w-44 place-items-center rounded-lg border border-slate-200 bg-white font-heading text-lg font-extrabold text-brand-dark shadow-sm"
+              className="grid h-20 w-44 place-items-center rounded-xl border border-slate-200 bg-white font-heading text-lg font-extrabold text-brand-dark shadow-sm transition hover:-translate-y-1 hover:border-brand-orange/30 hover:shadow-soft"
             >
               {partner}
             </div>
@@ -156,13 +158,17 @@ export function CaseStudySection() {
 export function TrustIndicators() {
   return (
     <section className="bg-white py-16">
-      <div className="container-enterprise grid gap-4 md:grid-cols-4">
-        {["SLA-led delivery", "Security-first architecture", "Vendor ecosystem expertise", "Executive reporting"].map((item) => (
-          <div key={item} className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-            <CheckCircle2 className="shrink-0 text-brand-orange" aria-hidden />
-            <p className="font-bold text-brand-dark">{item}</p>
-          </div>
-        ))}
+      <div className="container-enterprise">
+        <Stagger className="grid items-stretch gap-4 md:grid-cols-4" stagger={0.08}>
+          {["SLA-led delivery", "Security-first architecture", "Vendor ecosystem expertise", "Executive reporting"].map((item) => (
+            <StaggerItem key={item}>
+              <div className="premium-card flex h-full min-h-[5.5rem] items-center gap-3 rounded-xl p-5 shadow-sm">
+                <CheckCircle2 className="shrink-0 text-brand-orange" aria-hidden />
+                <p className="font-bold leading-snug text-brand-dark">{item}</p>
+              </div>
+            </StaggerItem>
+          ))}
+        </Stagger>
       </div>
     </section>
   );
@@ -171,20 +177,23 @@ export function TrustIndicators() {
 export function ContactCta() {
   return (
     <section className="bg-white py-20">
-      <div className="container-enterprise overflow-hidden rounded-lg bg-enterprise-gradient p-8 text-white shadow-soft md:p-12">
-        <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-orange-200">Lead Generation</p>
-            <h2 className="mt-3 font-heading text-3xl font-extrabold md:text-5xl">Ready to strengthen your IT foundation?</h2>
-            <p className="mt-4 max-w-2xl text-lg leading-8 text-white/75">
-              Book a consultation for infrastructure, cybersecurity, cloud, or managed IT services in Bangalore.
-            </p>
+      <Reveal>
+        <div className="container-enterprise overflow-hidden rounded-xl bg-enterprise-gradient p-8 text-white shadow-soft md:p-12">
+          <div className="hero-orb hero-orb-orange right-0 top-0 h-56 w-56 opacity-30" aria-hidden />
+          <div className="relative grid items-center gap-8 md:grid-cols-[1fr_auto]">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-orange-200">Get Started</p>
+              <h2 className="mt-3 font-heading text-3xl font-extrabold md:text-5xl">Ready to strengthen your IT foundation?</h2>
+              <p className="mt-4 max-w-2xl text-lg leading-8 text-white/75">
+                Contact Bhupati Techno Services for infrastructure, cybersecurity, cloud, or managed IT services in Bangalore.
+              </p>
+            </div>
+            <Link className="button-ripple rounded-md bg-brand-orange px-6 py-4 text-center font-bold text-white shadow-soft" href="/contact">
+              Start Consultation
+            </Link>
           </div>
-          <Link className="button-ripple rounded-md bg-brand-orange px-6 py-4 text-center font-bold text-white shadow-soft" href="/contact">
-            Start Consultation
-          </Link>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

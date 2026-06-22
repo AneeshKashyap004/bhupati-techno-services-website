@@ -1,27 +1,28 @@
-import type { Metadata } from "next";
-import { CalendarClock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
-import Link from "next/link";
+import { ContactDetails } from "@/components/ContactDetails";
 import { ContactForm } from "@/components/ContactForm";
+import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
+import { Reveal } from "@/components/Motion";
 import { site } from "@/data/site";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Contact Bhupati Techno Services for IT infrastructure services, cybersecurity, cloud solutions, managed IT services, and IT consulting in Bangalore.",
-};
+export const metadata = createPageMetadata({
+  title: "Contact Us",
+  description:
+    "Contact Bhupati Techno Services in Ganganagar, Bangalore for IT infrastructure, cybersecurity, cloud solutions, managed IT services, and IT consulting.",
+  path: "/contact",
+  keywords: ["contact IT company Bangalore", "Bhupati Techno Services address"],
+});
 
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-enterprise-gradient pt-32 text-white">
-        <div className="container-enterprise py-20">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-orange-200">Contact</p>
-          <h1 className="mt-4 max-w-4xl font-heading text-5xl font-extrabold leading-tight md:text-7xl">
-            Start with a practical technology consultation.
-          </h1>
-        </div>
-      </section>
-      <section className="bg-white py-20">
+      <PageHero
+        eyebrow="Contact"
+        title="Start with a practical technology consultation."
+        description="Reach our Bangalore team for infrastructure, cybersecurity, cloud, managed IT, and consulting support."
+      />
+      <section className="section-shell bg-white py-20">
         <div className="container-enterprise grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
             <SectionHeader
@@ -29,34 +30,43 @@ export default function ContactPage() {
               title="Tell us where your infrastructure needs to be stronger."
               description="Reach out for cybersecurity services, managed IT services, cloud solutions, IT consulting, or network implementation in Bangalore."
             />
-            <div className="mt-8 grid gap-4">
-              {[
-                [Phone, site.phone, `tel:${site.phone}`],
-                [Mail, site.email, `mailto:${site.email}`],
-                [MapPin, site.location, "#map"],
-                [MessageCircle, "WhatsApp Consultation", site.whatsapp],
-                [CalendarClock, "Book on Calendly", site.calendly],
-              ].map(([Icon, label, href]) => (
-                <Link key={String(label)} href={String(href)} className="flex items-center gap-4 rounded-lg border border-slate-200 bg-brand-light p-4 font-bold text-brand-dark">
-                  <Icon className="text-brand-orange" aria-hidden />
-                  {String(label)}
-                </Link>
-              ))}
-            </div>
+            <ContactDetails />
           </div>
-          <ContactForm />
+          <Reveal delay={0.1}>
+            <ContactForm />
+          </Reveal>
         </div>
       </section>
-      <section id="map" className="bg-brand-light py-20">
+      <section id="map" className="section-shell bg-brand-light py-20">
         <div className="container-enterprise">
-          <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
-            <h2 className="font-heading text-2xl font-extrabold text-brand-dark">Google Maps</h2>
-            <div className="mt-5 grid min-h-80 place-items-center rounded-lg bg-light-radial text-center">
-              <p className="max-w-md font-semibold text-brand-gray">
-                Embed the verified Google Maps iframe for the Bangalore office here before production launch.
-              </p>
+          <Reveal>
+            <div className="premium-card rounded-xl bg-white p-6 shadow-soft">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h2 className="font-heading text-2xl font-extrabold text-brand-dark">Visit Our Office</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-7 text-brand-gray">{site.location}</p>
+                </div>
+                <a
+                  href={site.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button-ripple inline-flex shrink-0 items-center justify-center rounded-md bg-brand-orange px-5 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-[#c45f21]"
+                >
+                  Open in Google Maps
+                </a>
+              </div>
+              <div className="mt-5 overflow-hidden rounded-xl border border-slate-200">
+                <iframe
+                  title="Bhupati Techno Services office location on Google Maps"
+                  src={site.mapsEmbedUrl}
+                  className="min-h-80 w-full"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </>

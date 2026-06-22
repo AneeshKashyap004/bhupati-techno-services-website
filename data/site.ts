@@ -17,10 +17,20 @@ import {
 export const site = {
   name: "Bhupati Techno Services",
   url: "https://www.bhupatitechno.com",
+  logos: {
+    logo: "/logo.png",
+  },
   phone: "+91 98765 43210",
-  email: "connect@bhupatitechno.com",
-  location: "Bangalore, Karnataka, India",
-  whatsapp: "https://wa.me/919876543210",
+  email: "sales@bhupatitechno.com",
+  location: "MLA Layout, 50, 2nd Floor, 4th Main, Ganganagar, Bengaluru, Karnataka 560032",
+  mapsUrl: "https://www.google.com/maps?q=13.0182319,77.5903604",
+  mapsEmbedUrl:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.789!2d77.5903604!3d13.0182319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae17c301df0da7%3A0xd3f7fe0e0f9e76c!2sBhupati%20Techno%20Services!5e0!3m2!1sen!2sin!4v1719000000000!5m2!1sen!2sin",
+  coordinates: {
+    lat: 13.0182319,
+    lng: 77.5903604,
+  },
+  whatsapp: "https://api.whatsapp.com/send?phone=919845477055",
   calendly: "https://calendly.com/bhupati-techno/consultation",
 };
 
@@ -202,12 +212,22 @@ export const localBusinessSchema = {
   "@type": "LocalBusiness",
   name: site.name,
   url: site.url,
+  image: `${site.url}${site.logos.logo}`,
+  logo: `${site.url}${site.logos.logo}`,
   telephone: site.phone,
   email: site.email,
+  hasMap: site.mapsUrl,
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: site.coordinates.lat,
+    longitude: site.coordinates.lng,
+  },
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Bangalore",
+    streetAddress: "MLA Layout, 50, 2nd Floor, 4th Main, Krishnappa Block, Ganganagar",
+    addressLocality: "Bengaluru",
     addressRegion: "Karnataka",
+    postalCode: "560032",
     addressCountry: "IN",
   },
   areaServed: ["Bangalore", "Karnataka", "India"],

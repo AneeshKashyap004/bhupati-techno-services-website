@@ -5,8 +5,6 @@
 :root {
   --background: #f7f8fa;
   --foreground: #111827;
-  --font-inter: Inter, Arial, sans-serif;
-  --font-montserrat: Montserrat, Inter, Arial, sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -23,6 +21,7 @@ body {
   color: var(--foreground);
   background: #ffffff;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
@@ -35,6 +34,28 @@ body {
   margin-inline: auto;
 }
 
+.premium-hero {
+  background: linear-gradient(135deg, #0e2852 0%, #163a73 48%, #1d4c91 100%);
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.45;
+  pointer-events: none;
+  animation: floatOrb 14s ease-in-out infinite;
+}
+
+.hero-orb-orange {
+  background: radial-gradient(circle, rgba(216, 106, 39, 0.55) 0%, transparent 70%);
+}
+
+.hero-orb-blue {
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.35) 0%, transparent 70%);
+  animation-delay: -4s;
+}
+
 .glass-panel {
   border: 1px solid rgba(255, 255, 255, 0.42);
   background: rgba(255, 255, 255, 0.78);
@@ -42,10 +63,58 @@ body {
   backdrop-filter: blur(18px);
 }
 
+.premium-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: #ffffff;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.premium-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #d86a27, #163a73);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.premium-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(216, 106, 39, 0.25);
+  box-shadow: 0 24px 70px rgba(14, 40, 82, 0.14);
+}
+
+.premium-card:hover::before {
+  transform: scaleX(1);
+}
+
+.section-shell {
+  position: relative;
+}
+
+.section-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(216, 106, 39, 0.04), transparent 30%);
+  pointer-events: none;
+}
+
 .button-ripple {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.button-ripple:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 40px rgba(216, 106, 39, 0.28);
 }
 
 .button-ripple::after {
@@ -66,6 +135,58 @@ body {
   height: 260px;
 }
 
+.btn-outline-light {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.nav-scrolled {
+  border-color: rgba(226, 232, 240, 0.9) !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  box-shadow: 0 12px 40px rgba(14, 40, 82, 0.08);
+}
+
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fed7aa;
+  backdrop-filter: blur(12px);
+}
+
+.eyebrow-pill::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: #d86a27;
+  box-shadow: 0 0 12px rgba(216, 106, 39, 0.8);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #fed7aa 55%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .focus-ring {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -73,6 +194,27 @@ body {
 
 .focus-ring:focus-visible {
   outline-color: #d86a27;
+}
+
+.footer-link {
+  position: relative;
+  display: inline-block;
+  transition: color 0.25s ease;
+}
+
+.footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: #d86a27;
+  transition: width 0.3s ease;
+}
+
+.footer-link:hover::after {
+  width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,32 +1,44 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Logo } from "@/components/Logo";
 import { navItems, site } from "@/data/site";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { scrollY } = useScroll();
+  const shadowOpacity = useTransform(scrollY, [0, 80], [0, 1]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed inset-x-0 top-0 z-50 border-b border-white/20 bg-white/90 backdrop-blur-xl"
+      className={`fixed inset-x-0 top-0 z-50 border-b backdrop-blur-xl transition-[background,box-shadow,border-color] duration-300 ${
+        scrolled ? "nav-scrolled" : "border-white/20 bg-white/90"
+      }`}
+      style={{ boxShadow: scrolled ? "0 12px 40px rgba(14, 40, 82, 0.08)" : undefined }}
     >
+      <motion.div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-orange/40 to-transparent"
+        style={{ opacity: shadowOpacity }}
+      />
       <nav className="container-enterprise flex h-20 items-center justify-between" aria-label="Primary">
-        <Link href="/" className="flex items-center gap-3 focus-ring rounded-lg">
-          <span className="grid h-11 w-11 place-items-center rounded-lg bg-enterprise-gradient text-xl font-black text-white shadow-soft">
-            B
-          </span>
-          <span>
-            <span className="block font-heading text-lg font-extrabold leading-none text-brand-dark">Bhupati</span>
-            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-gray">Techno Services</span>
-          </span>
+        <Link href="/" className="focus-ring rounded-lg" aria-label={`${site.name} home`}>
+          <Logo className="h-14 w-auto" priority />
         </Link>
 
         <div className="hidden items-center gap-8 lg:flex">
@@ -34,21 +46,27 @@ export function Navbar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`text-sm font-semibold transition hover:text-brand-orange ${
+              className={`relative text-sm font-semibold transition hover:text-brand-orange ${
                 pathname === item.href ? "text-brand-orange" : "text-brand-dark"
               }`}
             >
               {item.label}
+              {pathname === item.href ? (
+                <motion.span
+                  layoutId="nav-active"
+                  className="absolute -bottom-2 left-0 right-0 h-0.5 rounded-full bg-brand-orange"
+                />
+              ) : null}
             </Link>
           ))}
         </div>
 
         <div className="hidden items-center gap-3 lg:flex">
           <Link
-            href={site.calendly}
+            href="/contact"
             className="button-ripple rounded-md bg-brand-orange px-5 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-[#c45f21]"
           >
-            Schedule Consultation
+            Get In Touch
           </Link>
         </div>
 
@@ -63,7 +81,11 @@ export function Navbar() {
       </nav>
 
       {open ? (
-        <div className="border-t border-slate-200 bg-white lg:hidden">
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="border-t border-slate-200 bg-white lg:hidden"
+        >
           <div className="container-enterprise grid gap-2 py-4">
             {navItems.map((item) => (
               <Link
@@ -76,13 +98,14 @@ export function Navbar() {
               </Link>
             ))}
             <Link
-              href={site.calendly}
+              href="/contact"
+              onClick={() => setOpen(false)}
               className="mt-2 rounded-md bg-brand-orange px-4 py-3 text-center font-bold text-white"
             >
-              Schedule Consultation
+              Get In Touch
             </Link>
           </div>
-        </div>
+        </motion.div>
       ) : null}
     </motion.header>
   );
