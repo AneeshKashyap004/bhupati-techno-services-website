@@ -8,7 +8,7 @@ import {
   TrustIndicators,
 } from "@/components/EnterpriseSections";
 import { BlogGrid, IndustriesGrid, ServicesGrid, TestimonialsGrid } from "@/components/CardGrids";
-import { HomeHero, ValuePoints } from "@/components/HomeSections";
+import { HomeHero, WhyBhupatiSection } from "@/components/HomeSections";
 import { SectionHeader } from "@/components/SectionHeader";
 import { createPageMetadata } from "@/lib/seo";
 
@@ -38,13 +38,16 @@ export default function Home() {
         </div>
       </section>
       <section className="section-shell bg-brand-light py-20">
-        <div className="container-enterprise grid items-center gap-10 lg:grid-cols-2">
+        <div className="container-enterprise">
           <SectionHeader
             eyebrow="Why Bhupati"
             title="A technology partner built around strength, intelligence, and trust."
             description="Like the elephant in the brand, Bhupati Techno Services stands for stable foundations, thoughtful decisions, and partnerships that endure beyond the first implementation."
+            align="center"
           />
-          <ValuePoints />
+          <div className="mx-auto mt-10 max-w-2xl">
+            <WhyBhupatiSection />
+          </div>
         </div>
       </section>
       <TechnologyPartners />

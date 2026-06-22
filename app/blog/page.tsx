@@ -1,6 +1,7 @@
 import { BlogGrid } from "@/components/CardGrids";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
+import { images } from "@/data/images";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
@@ -18,6 +19,8 @@ export default function BlogPage() {
         eyebrow="Blog"
         title="Enterprise technology insights for Bangalore businesses."
         description="Practical guidance on infrastructure, security, cloud, and managed operations for teams building resilient technology."
+        imageSrc={images.hero.blog}
+        imageAlt="Technology insights for enterprise IT teams"
       />
       <section className="section-shell bg-brand-light py-20">
         <div className="container-enterprise">

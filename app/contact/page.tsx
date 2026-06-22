@@ -3,6 +3,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Reveal } from "@/components/Motion";
+import { images } from "@/data/images";
 import { site } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 
@@ -21,6 +22,8 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="Start with a practical technology consultation."
         description="Reach our Bangalore team for infrastructure, cybersecurity, cloud, managed IT, and consulting support."
+        imageSrc={images.hero.contact}
+        imageAlt="Contact Bhupati Techno Services in Bangalore"
       />
       <section className="section-shell bg-white py-20">
         <div className="container-enterprise grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">

@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { HeroNetwork } from "@/components/HeroNetwork";
 import { Reveal, Stagger, StaggerItem } from "@/components/Motion";
+import { images } from "@/data/images";
 import { services, site } from "@/data/site";
 
 export function ServicesList() {
@@ -10,43 +12,52 @@ export function ServicesList() {
     <div className="container-enterprise grid gap-8">
       {services.map((service, index) => {
         const Icon = service.icon;
+        const image = images.services[service.slug as keyof typeof images.services];
         return (
           <Reveal key={service.slug} delay={index * 0.04}>
             <article
               id={service.slug}
-              className={`premium-card grid gap-8 rounded-xl p-7 shadow-sm lg:grid-cols-[0.8fr_1.2fr] ${
+              className={`premium-card overflow-hidden rounded-xl shadow-sm ${
                 index % 2 ? "bg-brand-light" : "bg-white"
               }`}
             >
-              <div>
-                <div className="mb-6 grid h-14 w-14 place-items-center rounded-xl bg-white text-brand-navy shadow-sm">
-                  <Icon aria-hidden />
+              {image ? (
+                <div className="image-frame relative aspect-[3/1] max-h-44 w-full overflow-hidden sm:max-h-48">
+                  <Image src={image} alt={service.title} fill className="object-cover" sizes="(max-width:1024px) 100vw, 900px" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/35 to-transparent" />
                 </div>
-                <h2 className="font-heading text-3xl font-extrabold text-brand-dark">{service.title}</h2>
-                <p className="mt-4 text-lg leading-8 text-brand-gray">{service.summary}</p>
-                <a
-                  href={`mailto:${site.email}?subject=${encodeURIComponent(`Inquiry about ${service.title}`)}&body=${encodeURIComponent(`Hi Bhupati Techno Services,\n\nI would like to discuss ${service.title}.\n\n`)}`}
-                  className="button-ripple mt-7 inline-flex rounded-md bg-brand-orange px-6 py-3 font-bold text-white"
-                >
-                  Discuss {service.title}
-                </a>
-              </div>
-              <div className="grid gap-5 md:grid-cols-2">
-                <div className="rounded-xl bg-white p-6">
-                  <h3 className="font-heading text-xl font-extrabold text-brand-dark">Benefits</h3>
-                  <ul className="mt-4 grid gap-3 text-brand-gray">
-                    {service.benefits.map((benefit) => (
-                      <li key={benefit}>• {benefit}</li>
-                    ))}
-                  </ul>
+              ) : null}
+              <div className="flex flex-col gap-6 p-7">
+                <div>
+                  <div className="mb-5 grid h-12 w-12 place-items-center rounded-xl bg-white text-brand-navy shadow-sm">
+                    <Icon aria-hidden />
+                  </div>
+                  <h2 className="font-heading text-3xl font-extrabold text-brand-dark">{service.title}</h2>
+                  <p className="mt-4 max-w-3xl text-lg leading-8 text-brand-gray">{service.summary}</p>
+                  <a
+                    href={`mailto:${site.email}?subject=${encodeURIComponent(`Inquiry about ${service.title}`)}&body=${encodeURIComponent(`Hi Bhupati Techno Services,\n\nI would like to discuss ${service.title}.\n\n`)}`}
+                    className="button-ripple mt-6 inline-flex rounded-md bg-brand-orange px-6 py-3 font-bold text-white"
+                  >
+                    Discuss {service.title}
+                  </a>
                 </div>
-                <div className="rounded-xl bg-white p-6">
-                  <h3 className="font-heading text-xl font-extrabold text-brand-dark">Use Cases</h3>
-                  <ul className="mt-4 grid gap-3 text-brand-gray">
-                    {service.useCases.map((useCase) => (
-                      <li key={useCase}>• {useCase}</li>
-                    ))}
-                  </ul>
+                <div className="grid gap-5">
+                  <div className="rounded-xl bg-white p-6">
+                    <h3 className="font-heading text-xl font-extrabold text-brand-dark">Benefits</h3>
+                    <ul className="mt-4 grid gap-3 text-brand-gray">
+                      {service.benefits.map((benefit) => (
+                        <li key={benefit}>• {benefit}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="rounded-xl bg-white p-6">
+                    <h3 className="font-heading text-xl font-extrabold text-brand-dark">Use Cases</h3>
+                    <ul className="mt-4 grid gap-3 text-brand-gray">
+                      {service.useCases.map((useCase) => (
+                        <li key={useCase}>• {useCase}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </article>
@@ -86,7 +97,10 @@ export function HomeHero() {
           </div>
         </Reveal>
         <Reveal delay={0.15} className="hidden lg:block">
-          <div className="glass-panel ml-auto max-w-md rounded-xl p-6 text-brand-ink">
+          <div className="glass-panel relative ml-auto max-w-md overflow-hidden rounded-xl p-6 text-brand-ink">
+            <div className="image-frame relative mb-5 aspect-[2/1] overflow-hidden rounded-lg">
+              <Image src={images.brand.banner} alt="Bhupati Techno Services" fill className="object-cover" sizes="400px" />
+            </div>
             <p className="font-heading text-2xl font-extrabold text-brand-dark">Strength in the foundation.</p>
             <p className="mt-3 text-sm leading-7 text-brand-gray">
               Stable architecture, connected intelligence, and long-term partnership for enterprise teams across
@@ -123,4 +137,8 @@ export function ValuePoints() {
       ))}
     </Stagger>
   );
+}
+
+export function WhyBhupatiSection() {
+  return <ValuePoints />;
 }

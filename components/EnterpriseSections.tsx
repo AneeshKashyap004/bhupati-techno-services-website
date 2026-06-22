@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Activity, ArrowRight, CheckCircle2, Database, MonitorDot, Server, ShieldCheck, Users } from "lucide-react";
 import Link from "next/link";
 import { architectureFlow, partners, socMetrics, stats } from "@/data/site";
+import { images } from "@/data/images";
 import { Counter, Reveal, Stagger, StaggerItem } from "@/components/Motion";
 import { SectionHeader } from "@/components/SectionHeader";
 
@@ -91,8 +93,11 @@ export function InfrastructureFlow() {
 
 export function SocDashboard() {
   return (
-    <section className="bg-enterprise-gradient py-20 text-white">
-      <div className="container-enterprise grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+    <section className="relative overflow-hidden bg-enterprise-gradient py-20 text-white">
+      <div className="absolute inset-0 opacity-20">
+        <Image src={images.sections.soc} alt="" fill className="object-cover" aria-hidden sizes="100vw" />
+      </div>
+      <div className="container-enterprise relative z-10 grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <Reveal>
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-orange-200">Cybersecurity Operations</p>
           <h2 className="font-heading text-3xl font-extrabold leading-tight md:text-5xl">
